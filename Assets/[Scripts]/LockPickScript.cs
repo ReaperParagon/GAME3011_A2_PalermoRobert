@@ -16,6 +16,8 @@ public class LockPickScript : MonoBehaviour
 
     public float angle { get; private set; }
 
+    private bool canRotate = true;
+
     private void OnEnable()
     {
         LockPickingEvents.LockChanged += SetupLockPick;
@@ -41,9 +43,17 @@ public class LockPickScript : MonoBehaviour
 
     public void OnRotate(InputValue value)
     {
+        if (!canRotate)
+            return;
+
         angle -= value.Get<float>() * rotateSensitivity;
         angle = Mathf.Clamp(angle, 0, maxAngle);
 
         lockpickBody.transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle + rotationOffset);
+    }
+
+    public void OnTryLock(InputValue value)
+    {
+        canRotate = !value.isPressed;
     }
 }

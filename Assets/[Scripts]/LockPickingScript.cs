@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class LockPickingScript : MonoBehaviour
 {
@@ -35,7 +36,6 @@ public class LockPickingScript : MonoBehaviour
     void Update()
     {
         currentAngle = lockPick.angle;
-        print(CheckCurrentAngle());
     }
 
     /// Functions ///
@@ -65,11 +65,32 @@ public class LockPickingScript : MonoBehaviour
         return false;
     }
 
-    public float GetCurrentAngleProximity()
+    public float CheckAngleProximity()
     {
         float distanceToTarget = Mathf.Abs(targetAngle - currentAngle);
 
-        return 0.0f;
+        if (distanceToTarget < targetRange)
+            return 1.0f;
+
+        return 1.0f - ((distanceToTarget - targetRange) / currentLock.lockRange);
     }
 
+    /// Input System ///
+
+    public void OnTryLock(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            LockPickingEvents.InvokeOnTryLock(CheckCurrentAngle(), CheckAngleProximity());
+
+            // PrintTryLockInfo();
+        }
+    }
+
+    /// Debug ///
+
+    public void PrintTryLockInfo()
+    {
+        print("Unlocked? : " + CheckCurrentAngle() + "... Proximity : " + CheckAngleProximity() + "...");
+    }
 }

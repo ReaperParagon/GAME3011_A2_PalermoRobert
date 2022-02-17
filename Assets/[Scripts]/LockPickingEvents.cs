@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LockPickingEvents
 {
+    /// Lock Change ///
+
     public delegate void OnLockChange(LockScript newLock);
 
     public static event OnLockChange LockChanged;
@@ -14,6 +16,8 @@ public class LockPickingEvents
     }
 
 
+    /// Target Angle Change ///
+
     public delegate void OnTargetAngleChange(float targetAngle, float targetRange);
 
     public static event OnTargetAngleChange TargetAngleChanged;
@@ -21,5 +25,17 @@ public class LockPickingEvents
     public static void InvokeOnTargetAngleChange(float targetAngle, float targetRange)
     {
         TargetAngleChanged?.Invoke(targetAngle, targetRange);
+    }
+
+
+    /// Try Lock ///
+
+    public delegate void OnTryLock(bool unlocked, float proximity);
+
+    public static event OnTryLock TryLock;
+
+    public static void InvokeOnTryLock(bool unlocked, float proximity)
+    {
+        TryLock?.Invoke(unlocked, proximity);
     }
 }

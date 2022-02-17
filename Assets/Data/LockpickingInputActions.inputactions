@@ -12,6 +12,14 @@
                     "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "TryLock",
+                    "type": "Button",
+                    "id": "84066908-443d-49e0-9502-5df5c8fff2bc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -23,6 +31,17 @@
                     "processors": "Clamp(min=-100,max=100),Normalize(min=-1,max=1)",
                     "groups": "",
                     "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0064c08d-a923-48c7-bf88-6293e95eb697",
+                    "path": "<Keyboard>/w",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TryLock",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
