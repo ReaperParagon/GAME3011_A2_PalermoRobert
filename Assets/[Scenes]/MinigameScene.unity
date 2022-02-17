@@ -735,6 +735,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1551220706}
+  - component: {fileID: 1551220707}
   m_Layer: 5
   m_Name: LockPicking
   m_TagString: Untagged
@@ -763,6 +764,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1551220707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551220705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b14ea32aebafce41b998d84d0612dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1738513935
 GameObject:
   m_ObjectHideFlags: 0
@@ -840,6 +853,7 @@ GameObject:
   - component: {fileID: 2087874397}
   - component: {fileID: 2087874399}
   - component: {fileID: 2087874398}
+  - component: {fileID: 2087874400}
   m_Layer: 5
   m_Name: Lock
   m_TagString: Untagged
@@ -904,3 +918,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2087874396}
   m_CullTransparentMesh: 1
+--- !u!114 &2087874400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087874396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb99b0a20d789644af02925fc74d321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lockDifficulty: 0.5
+  lockRange: 180
