@@ -18,8 +18,6 @@ public class LockPickingScript : MonoBehaviour
     // Lock Variables
     private float targetAngle;
     private float targetRange;
-    private float hintRange;
-
 
     // Pick Variables
     private float currentAngle;
@@ -46,7 +44,6 @@ public class LockPickingScript : MonoBehaviour
 
         // Setup difficulty of the lock
         targetRange = 20 * currentLock.lockDifficulty;
-        hintRange = 50 * currentLock.lockDifficulty;
 
         lockBody.GetComponent<Image>().color = Color.Lerp(Color.red, Color.white, currentLock.lockDifficulty);
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SkeletonKeyScript : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class SkeletonKeyScript : MonoBehaviour
         indicatorRight = Instantiate(angleIndicatorPrefab, transform);
 
         LockPickingEvents.TargetAngleChanged += UpdateAngleIndicator;
-        ToggleKey(false);
+        SetKeyEnabled(false);
     }
     private void OnDisable()
     {
@@ -26,7 +27,12 @@ public class SkeletonKeyScript : MonoBehaviour
 
     /// Functions ///
 
-    public void ToggleKey(bool enable)
+    public void ToggleKey()
+    {
+        SetKeyEnabled(!indicatorLeft.activeSelf);
+    }
+
+    public void SetKeyEnabled(bool enable)
     {
         indicatorLeft.SetActive(enable);
         indicatorRight.SetActive(enable);
@@ -37,4 +43,12 @@ public class SkeletonKeyScript : MonoBehaviour
         indicatorLeft.transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle + range);
         indicatorRight.transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle - range);
     }
+
+    /// Input System ///
+
+    public void OnToggleSkeletonKey(InputValue value)
+    {
+        ToggleKey();
+    }
+
 }
