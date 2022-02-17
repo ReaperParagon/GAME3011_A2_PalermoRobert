@@ -55,6 +55,26 @@ public class LockProximityScript : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
+        barFillCoroutine = FadeOutIndicatorCoroutine();
+        StartCoroutine(barFillCoroutine);
+    }
+
+    private IEnumerator FadeOutIndicatorCoroutine()
+    {
+        Color c = fillImage.color;
+
+        yield return new WaitForSeconds(1.5f);
+
+        for (float a = 1.0f; a >= 0.0f; a -= 0.01f)
+        {
+            c.a = a;
+            fillImage.color = c;
+            yield return new WaitForFixedUpdate();
+        }
+
+        c.a = 0.0f;
+        fillImage.color = c;
+
         barFillCoroutine = null;
     }
 
