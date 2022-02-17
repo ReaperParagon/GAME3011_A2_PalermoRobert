@@ -16,7 +16,7 @@ public class LockScript : MonoBehaviour
 
     public float GetNewLockAngle()
     {
-        lockAngle = Random.Range(10.0f, lockRange - 10.0f);
+        lockAngle = Random.Range(lockRange * 0.1f, lockRange - (lockRange * 0.1f));
         return lockAngle;
     }
 }

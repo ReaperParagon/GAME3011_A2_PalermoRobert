@@ -7,6 +7,9 @@ using UnityEngine.InputSystem;
 public class LockPickingScript : MonoBehaviour
 {
     [SerializeField]
+    public PlayerSkill playerSkill;
+
+    [SerializeField]
     public LockScript currentLock;
 
     [SerializeField]
@@ -14,6 +17,12 @@ public class LockPickingScript : MonoBehaviour
 
     [SerializeField]
     public GameObject lockBody;
+
+    [SerializeField]
+    public AnimationCurve skillDifficultyCurve;
+
+    [SerializeField]
+    public AnimationCurve lockDifficultyCurve;
 
     // Lock Variables
     private float targetAngle;
@@ -43,9 +52,14 @@ public class LockPickingScript : MonoBehaviour
         targetAngle = currentLock.GetNewLockAngle();
 
         // Setup difficulty of the lock
-        targetRange = 20 * currentLock.lockDifficulty;
 
-        lockBody.GetComponent<Image>().color = Color.Lerp(Color.red, Color.white, currentLock.lockDifficulty);
+        float lockDiff = lockDifficultyCurve.Evaluate(currentLock.lockDifficulty);
+        float skillDiff = skillDifficultyCurve.Evaluate(playerSkill.lockpickingSkill * 0.01f);
+        float rangeDiff = currentLock.lockRange * 0.25f;
+
+        targetRange = rangeDiff * lockDiff * skillDiff;
+
+        lockBody.GetComponent<Image>().color = Color.Lerp(Color.white, Color.red, currentLock.lockDifficulty);
 
         // Send New Lock Event
         LockPickingEvents.InvokeOnLockChange(currentLock);
@@ -80,6 +94,7 @@ public class LockPickingScript : MonoBehaviour
         {
             LockPickingEvents.InvokeOnTryLock(CheckCurrentAngle(), CheckAngleProximity());
 
+            GetNewLock();
             // PrintTryLockInfo();
         }
     }
