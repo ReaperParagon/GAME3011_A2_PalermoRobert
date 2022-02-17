@@ -14,12 +14,12 @@ public class LockPickingEvents
     }
 
 
-    public delegate void OnTargetAngleChange(float targetAngle);
+    public delegate void OnTargetAngleChange(float targetAngle, float targetRange);
 
     public static event OnTargetAngleChange TargetAngleChanged;
 
-    public static void InvokeOnTargetAngleChange(float targetAngle)
+    public static void InvokeOnTargetAngleChange(float targetAngle, float targetRange)
     {
-        TargetAngleChanged?.Invoke(targetAngle);
+        TargetAngleChanged?.Invoke(targetAngle, targetRange);
     }
 }

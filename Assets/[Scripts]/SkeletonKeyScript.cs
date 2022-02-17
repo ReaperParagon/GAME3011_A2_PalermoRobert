@@ -5,10 +5,17 @@ using UnityEngine;
 public class SkeletonKeyScript : MonoBehaviour
 {
     [SerializeField]
-    public GameObject angleIndicator;
+    public GameObject angleIndicatorPrefab;
+
+    private GameObject indicatorLeft;
+    private GameObject indicatorRight;
 
     private void OnEnable()
     {
+        // Create the left and right indicators
+        indicatorLeft = Instantiate(angleIndicatorPrefab, transform);
+        indicatorRight = Instantiate(angleIndicatorPrefab, transform);
+
         LockPickingEvents.TargetAngleChanged += UpdateAngleIndicator;
         ToggleKey(false);
     }
@@ -21,11 +28,13 @@ public class SkeletonKeyScript : MonoBehaviour
 
     public void ToggleKey(bool enable)
     {
-        angleIndicator.SetActive(enable);
+        indicatorLeft.SetActive(enable);
+        indicatorRight.SetActive(enable);
     }
 
-    public void UpdateAngleIndicator(float angle)
+    public void UpdateAngleIndicator(float angle, float range)
     {
-        angleIndicator.transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle);
+        indicatorLeft.transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle + range);
+        indicatorRight.transform.rotation = Quaternion.Euler(0.0f, 0.0f, angle - range);
     }
 }
