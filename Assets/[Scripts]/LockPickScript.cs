@@ -12,7 +12,7 @@ public class LockPickScript : MonoBehaviour
     public float rotateSensitivity = 0.02f;
 
     private float maxAngle;
-    private float rotationOffset;
+    public float rotationOffset { get; private set; }
 
     public float angle { get; private set; }
 

@@ -35,8 +35,6 @@ public class LockPickingScript : MonoBehaviour
     void Update()
     {
         currentAngle = lockPick.angle;
-
-        print(CheckCurrentAngle());
     }
 
     /// Functions ///
@@ -53,6 +51,9 @@ public class LockPickingScript : MonoBehaviour
 
         // Send New Lock Event
         LockPickingEvents.InvokeOnLockChange(currentLock);
+
+        // Send Target Angle Changed Event
+        LockPickingEvents.InvokeOnTargetAngleChange(currentLock.lockAngle + lockPick.rotationOffset);
     }
 
     public bool CheckCurrentAngle()
