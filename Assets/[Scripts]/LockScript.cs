@@ -12,11 +12,6 @@ public class LockScript : MonoBehaviour
 
     public float lockAngle { get; private set; }
 
-    private void Awake()
-    {
-        GetNewLockAngle();
-    }
-
     /// Functions ///
 
     public float GetNewLockAngle()

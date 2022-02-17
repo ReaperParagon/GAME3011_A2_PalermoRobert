@@ -1,0 +1,33 @@
+{
+    "name": "LockpickingInputActions",
+    "maps": [
+        {
+            "name": "PickRotation",
+            "id": "e9c1100f-1cb7-4a62-b591-61b254addd85",
+            "actions": [
+                {
+                    "name": "Rotate",
+                    "type": "Value",
+                    "id": "c8e9fda3-ac76-4a0c-8c7e-797ed8aaa93b",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8000963c-bf4a-452e-89fc-07caa2f71fd6",
+                    "path": "<Mouse>/delta/x",
+                    "interactions": "",
+                    "processors": "Clamp(min=-100,max=100),Normalize(min=-1,max=1)",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

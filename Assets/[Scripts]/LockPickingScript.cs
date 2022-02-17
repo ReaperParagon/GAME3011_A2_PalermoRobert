@@ -9,7 +9,7 @@ public class LockPickingScript : MonoBehaviour
     public LockScript currentLock;
 
     [SerializeField]
-    public GameObject lockPick;
+    public LockPickScript lockPick;
 
     [SerializeField]
     public GameObject lockBody;
@@ -27,13 +27,14 @@ public class LockPickingScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.Locked;
+        GetNewLock();
     }
 
     // Update is called once per frame
     void Update()
     {
-        currentAngle = lockPick.transform.eulerAngles.z;
+        currentAngle = lockPick.angle;
 
         print(CheckCurrentAngle());
     }
@@ -45,8 +46,8 @@ public class LockPickingScript : MonoBehaviour
         targetAngle = currentLock.GetNewLockAngle();
 
         // Setup difficulty of the lock
-        targetRange = 5 * currentLock.lockDifficulty;
-        hintRange = 20 * currentLock.lockDifficulty;
+        targetRange = 20 * currentLock.lockDifficulty;
+        hintRange = 50 * currentLock.lockDifficulty;
 
         lockBody.GetComponent<Image>().color = Color.Lerp(Color.red, Color.white, currentLock.lockDifficulty);
 
