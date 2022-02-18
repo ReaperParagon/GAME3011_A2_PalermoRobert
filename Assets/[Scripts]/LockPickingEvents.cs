@@ -38,4 +38,15 @@ public class LockPickingEvents
     {
         TryLock?.Invoke(unlocked, proximity);
     }
+
+    /// Timer Done ///
+
+    public delegate void OnTimerDone();
+
+    public static event OnTimerDone TimerDone;
+
+    public static void InvokeOnTimerDone()
+    {
+        TimerDone?.Invoke();
+    }
 }
