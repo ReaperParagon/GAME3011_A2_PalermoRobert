@@ -43,6 +43,10 @@ public class LockPickingScript : MonoBehaviour
         }
     }
 
+    // Minigame Variables
+
+    public static bool allowInput { get; set; }
+
 
     /// Functions ///
 
@@ -118,6 +122,9 @@ public class LockPickingScript : MonoBehaviour
 
     public void OnTryLock(InputValue value)
     {
+        if (!LockPickingScript.allowInput)
+            return;
+
         if (value.isPressed)
         {
             LockPickingEvents.InvokeOnTryLock(CheckCurrentAngle(), CheckAngleProximity());
@@ -125,8 +132,7 @@ public class LockPickingScript : MonoBehaviour
             if (CheckCurrentAngle() && CheckDonePins())
             {
                 // Lock is Done
-                print("Unlocked!");
-                GetNewLock();
+                LockPickingEvents.InvokeOnSuccessfulPick();
             }
         }
     }

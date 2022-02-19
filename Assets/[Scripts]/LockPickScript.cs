@@ -43,6 +43,9 @@ public class LockPickScript : MonoBehaviour
 
     public void OnRotate(InputValue value)
     {
+        if (!LockPickingScript.allowInput)
+            return;
+
         if (!canRotate)
             return;
 
@@ -54,6 +57,9 @@ public class LockPickScript : MonoBehaviour
 
     public void OnTryLock(InputValue value)
     {
+        if (!LockPickingScript.allowInput)
+            return;
+
         canRotate = !value.isPressed;
     }
 }

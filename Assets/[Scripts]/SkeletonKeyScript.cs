@@ -18,14 +18,25 @@ public class SkeletonKeyScript : MonoBehaviour
         indicatorRight = Instantiate(angleIndicatorPrefab, transform);
 
         LockPickingEvents.TargetAngleChanged += UpdateAngleIndicator;
+        LockPickingEvents.LockChanged += DisableOnNewLock;
         SetKeyEnabled(false);
     }
     private void OnDisable()
     {
         LockPickingEvents.TargetAngleChanged -= UpdateAngleIndicator;
+        LockPickingEvents.LockChanged -= DisableOnNewLock;
+
+        // Destroy the left and right indicators
+        Destroy(indicatorRight);
+        Destroy(indicatorLeft);
     }
 
     /// Functions ///
+
+    public void DisableOnNewLock(LockScript newLock)
+    {
+        SetKeyEnabled(false);
+    }
 
     public void ToggleKey()
     {
@@ -48,6 +59,9 @@ public class SkeletonKeyScript : MonoBehaviour
 
     public void OnToggleSkeletonKey(InputValue value)
     {
+        if (!LockPickingScript.allowInput)
+            return;
+
         ToggleKey();
     }
 

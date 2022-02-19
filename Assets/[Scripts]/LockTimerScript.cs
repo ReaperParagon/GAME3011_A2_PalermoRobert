@@ -21,11 +21,13 @@ public class LockTimerScript : MonoBehaviour
     private void OnEnable()
     {
         LockPickingEvents.LockChanged += StartTimer;
+        LockPickingEvents.SuccessfulPick += StopTimer;
     }
 
     private void OnDisable()
     {
         LockPickingEvents.LockChanged -= StartTimer;
+        LockPickingEvents.SuccessfulPick -= StopTimer;
     }
 
 
@@ -50,6 +52,11 @@ public class LockTimerScript : MonoBehaviour
         timerEnabled = true;
     }
 
+    public void StopTimer()
+    {
+        timerEnabled = false;
+    }
+
     public void CheckTimerEnd()
     {
         if (timeRemaining <= 0.0f)
@@ -62,10 +69,15 @@ public class LockTimerScript : MonoBehaviour
 
     private void UpdateTimerText()
     {
+        timerText.text = GetTimerFormatted();
+    }
+
+    public string GetTimerFormatted()
+    {
         int minutes = Mathf.FloorToInt(timeRemaining / 60.0f);
         int seconds = Mathf.FloorToInt(timeRemaining % 60.0f);
 
-        timerText.text = minutes.ToString("00") + " : " + seconds.ToString("00");
+        return minutes.ToString("00") + ":" + seconds.ToString("00");
     }
 
 }

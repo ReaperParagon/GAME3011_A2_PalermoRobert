@@ -16,6 +16,11 @@ public class LockProximityScript : MonoBehaviour
     private void OnEnable()
     {
         LockPickingEvents.TryLock += UpdateIndicator;
+
+        Color c = Color.red;
+        c.a = 0.0f;
+
+        fillImage.color = c;
     }
 
     private void OnDisable()

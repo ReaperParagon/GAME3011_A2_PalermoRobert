@@ -49,6 +49,17 @@ public class LockPickingEvents
     {
         TimerDone?.Invoke();
     }
+    
+    /// Successful Pick ///
+
+    public delegate void OnSuccessfulPick();
+
+    public static event OnSuccessfulPick SuccessfulPick;
+
+    public static void InvokeOnSuccessfulPick()
+    {
+        SuccessfulPick?.Invoke();
+    }
 
     /// Cursor Visibility ///
 

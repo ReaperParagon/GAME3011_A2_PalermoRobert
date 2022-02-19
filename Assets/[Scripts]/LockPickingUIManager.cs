@@ -16,6 +16,16 @@ public class LockPickingUIManager : MonoBehaviour
     [SerializeField]
     public LockPickingScript lockPickingMiniGame;
 
+    [Header("Results Properties")]
+    [SerializeField]
+    public GameObject resultsUI;
+
+    [SerializeField]
+    public TextMeshProUGUI resultsLabel;
+
+    [SerializeField]
+    public LockTimerScript lockTimer;
+
     [Header("Lock Properties")]
     [SerializeField]
     public GameObject lockBody;
@@ -31,11 +41,15 @@ public class LockPickingUIManager : MonoBehaviour
     {
         LockPickingEvents.ChangeCursorVisible += ToggleCursor;
         LockPickingEvents.LockChanged += SetUIInformation;
+        LockPickingEvents.TimerDone += FailedPicking;
+        LockPickingEvents.SuccessfulPick += SucceedPicking;
     }
     private void OnDisable()
     {
         LockPickingEvents.ChangeCursorVisible -= ToggleCursor;
         LockPickingEvents.LockChanged -= SetUIInformation;
+        LockPickingEvents.TimerDone -= FailedPicking;
+        LockPickingEvents.SuccessfulPick -= SucceedPicking;
     }
 
 
@@ -65,12 +79,38 @@ public class LockPickingUIManager : MonoBehaviour
     public void EnablePickingUI(bool enable)
     {
         lockPickingUI.SetActive(enable);
+        LockPickingScript.allowInput = enable;
 
         if (enable)
         {
             lockPickingMiniGame.GetNewLock();
             LockPickingEvents.InvokeOnChangeCursorVisible(false);
         }
+    }
+
+    public void EnableResultsUI(bool enable)
+    {
+        resultsUI.SetActive(enable);
+
+        // Remove Check if you want to go back to no cursor after exiting results
+        if (enable)
+            LockPickingEvents.InvokeOnChangeCursorVisible(enable);
+    }
+
+    public void FailedPicking()
+    {
+        LockPickingScript.allowInput = false;
+
+        resultsLabel.text = "You ran out of time!";
+        EnableResultsUI(true);
+    }
+
+    public void SucceedPicking()
+    {
+        LockPickingScript.allowInput = false;
+
+        resultsLabel.text = "Successfully picked the lock with " + lockTimer.GetTimerFormatted() + " remaining!";
+        EnableResultsUI(true);
     }
 
     public void SetUIInformation(LockScript currentLock)
