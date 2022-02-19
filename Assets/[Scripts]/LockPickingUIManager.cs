@@ -28,7 +28,13 @@ public class LockPickingUIManager : MonoBehaviour
 
     [Header("Lock Properties")]
     [SerializeField]
+    public LockScript currentLock;
+
+    [SerializeField]
     public GameObject lockBody;
+
+    [SerializeField]
+    public TextMeshProUGUI difficultyLabel;
 
     [Header("Player Skill Properties")]
     [SerializeField]
@@ -67,6 +73,21 @@ public class LockPickingUIManager : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
+    }
+
+    private void RandomizeMiniGame()
+    {
+        currentLock.lockDifficulty = Random.Range(0.0f, 1.0f);
+        currentLock.lockRange = 180.0f;
+        playerSkill.lockpickingSkill = Random.Range(1, 100);
+    }
+
+    public void StartLockPicking(bool randomLock)
+    {
+        if (randomLock)
+            RandomizeMiniGame();
+
+        EnablePickingUI(true);
     }
 
     public void EnablePickingOptionsUI(bool enable)
@@ -117,6 +138,9 @@ public class LockPickingUIManager : MonoBehaviour
     {
         // Set Player Skill
         playerSkillLevelLabel.text = playerSkill.lockpickingSkill.ToString();
+
+        // Set Lock Difficulty
+        difficultyLabel.text = "Difficulty: " + currentLock.GetDifficultyName();
 
         // Set Colour
         lockBody.GetComponent<Image>().color = Color.Lerp(Color.white, Color.red, currentLock.lockDifficulty);
