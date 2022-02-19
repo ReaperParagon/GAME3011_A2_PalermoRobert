@@ -17,9 +17,6 @@ public class LockPickingScript : MonoBehaviour
     public LockPickScript lockPick;
 
     [SerializeField]
-    public GameObject lockBody;
-
-    [SerializeField]
     public AnimationCurve skillDifficultyCurve;
 
     [SerializeField]
@@ -29,7 +26,7 @@ public class LockPickingScript : MonoBehaviour
     public AnimationCurve numberOfPinsCurve;
 
     [SerializeField]
-    public TextMeshProUGUI pinsText;
+    public TextMeshProUGUI remainingPinsLabel;
 
     // Lock Variables
     private float targetAngle;
@@ -38,21 +35,14 @@ public class LockPickingScript : MonoBehaviour
     private int currentPin;
 
     // Pick Variables
-    private float currentAngle;
-
-
-    // Start is called before the first frame update
-    void Start()
+    private float currentAngle 
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        GetNewLock();
+        get
+        {
+            return lockPick.angle;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        currentAngle = lockPick.angle;
-    }
 
     /// Functions ///
 
@@ -69,9 +59,7 @@ public class LockPickingScript : MonoBehaviour
 
         numPins = Mathf.FloorToInt(numberOfPinsCurve.Evaluate(currentLock.lockDifficulty));
         currentPin = 1;
-        pinsText.text = numPins.ToString();
-
-        lockBody.GetComponent<Image>().color = Color.Lerp(Color.white, Color.red, currentLock.lockDifficulty);
+        remainingPinsLabel.text = numPins.ToString();
 
         // Send New Lock Event
         LockPickingEvents.InvokeOnLockChange(currentLock);
@@ -85,7 +73,7 @@ public class LockPickingScript : MonoBehaviour
         targetAngle = currentLock.GetNewLockAngle();
 
         // Display information on Number of pins done and pins remaining
-        pinsText.text = (numPins - currentPin).ToString();
+        remainingPinsLabel.text = (numPins - currentPin).ToString();
 
         if (currentPin < numPins)
             ++currentPin;
@@ -112,10 +100,16 @@ public class LockPickingScript : MonoBehaviour
         return 1.0f - ((distanceToTarget - targetRange) / currentLock.lockRange);
     }
 
-    public bool CheckCurrentPin()
+    public bool CheckDonePins()
     {
         if (currentPin >= numPins)
+        {
+            remainingPinsLabel.text = (numPins - currentPin).ToString();
             return true;
+        }
+
+        // Next Pin
+        GetNewPin();
 
         return false;
     }
@@ -128,21 +122,11 @@ public class LockPickingScript : MonoBehaviour
         {
             LockPickingEvents.InvokeOnTryLock(CheckCurrentAngle(), CheckAngleProximity());
 
-            if (CheckCurrentAngle())
+            if (CheckCurrentAngle() && CheckDonePins())
             {
-                if (CheckCurrentPin())
-                {
-                    // Lock is Done
-                    pinsText.text = (numPins - currentPin).ToString();
-
-                    print("Unlocked!");
-                    GetNewLock();
-                }
-                else
-                {
-                    // Next Pin
-                    GetNewPin();
-                }
+                // Lock is Done
+                print("Unlocked!");
+                GetNewLock();
             }
         }
     }

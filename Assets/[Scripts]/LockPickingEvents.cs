@@ -49,4 +49,15 @@ public class LockPickingEvents
     {
         TimerDone?.Invoke();
     }
+
+    /// Cursor Visibility ///
+
+    public delegate void OnChangeCursorVisible(bool enable);
+
+    public static event OnChangeCursorVisible ChangeCursorVisible;
+
+    public static void InvokeOnChangeCursorVisible(bool enable)
+    {
+        ChangeCursorVisible?.Invoke(enable);
+    }
 }
