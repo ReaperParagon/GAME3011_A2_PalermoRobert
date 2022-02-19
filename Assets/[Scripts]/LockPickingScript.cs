@@ -125,7 +125,7 @@ public class LockPickingScript : MonoBehaviour
         if (!LockPickingScript.allowInput)
             return;
 
-        if (value.isPressed)
+        if (!value.isPressed)
         {
             LockPickingEvents.InvokeOnTryLock(CheckCurrentAngle(), CheckAngleProximity());
 

@@ -68,9 +68,9 @@ public class LockProximityScript : MonoBehaviour
     {
         Color c = fillImage.color;
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.1f);
 
-        for (float a = 1.0f; a >= 0.0f; a -= 0.01f)
+        for (float a = fillImage.color.a; a >= 0.0f; a -= 0.05f)
         {
             c.a = a;
             fillImage.color = c;

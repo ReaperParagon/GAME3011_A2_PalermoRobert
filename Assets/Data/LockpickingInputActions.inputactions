@@ -28,6 +28,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press"
+                },
+                {
+                    "name": "AbortTryLock",
+                    "type": "Button",
+                    "id": "e08043ac-2b1d-4c00-9588-8ce35c068fc3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)"
                 }
             ],
             "bindings": [
@@ -46,7 +54,7 @@
                     "name": "",
                     "id": "0064c08d-a923-48c7-bf88-6293e95eb697",
                     "path": "<Keyboard>/w",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "Press,SlowTap",
                     "processors": "",
                     "groups": "",
                     "action": "TryLock",
@@ -61,6 +69,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ToggleSkeletonKey",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "174b1db0-4d79-489b-8c49-f5ab41150f66",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AbortTryLock",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -21,6 +21,8 @@ public class LockPickScript : MonoBehaviour
     private void OnEnable()
     {
         LockPickingEvents.LockChanged += SetupLockPick;
+
+        canRotate = true;
     }
 
     private void OnDisable()
@@ -56,6 +58,14 @@ public class LockPickScript : MonoBehaviour
     }
 
     public void OnTryLock(InputValue value)
+    {
+        if (!LockPickingScript.allowInput)
+            return;
+
+        canRotate = !value.isPressed;
+    }
+
+    public void OnAbortTryLock(InputValue value)
     {
         if (!LockPickingScript.allowInput)
             return;
