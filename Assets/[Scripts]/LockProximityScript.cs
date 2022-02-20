@@ -44,15 +44,7 @@ public class LockProximityScript : MonoBehaviour
 
     private IEnumerator UpdateIndicatorCoroutine(float proximity)
     {
-        float dist = Mathf.Abs(proximity - currentProximity);
-
-        if (dist < 0.01f)
-        {
-            barFillCoroutine = null;
-            yield break;
-        }
-
-        for (float pos = currentProximity; Mathf.Abs(pos - proximity) > 0.01f; pos += (proximity - pos) * 0.1f)
+        for (float pos = currentProximity; Mathf.Abs(pos - proximity) > 0.0001f; pos += (proximity - pos) * 0.1f)
         {
             fillImage.color = barFillGradient.Evaluate(pos);
             currentProximity = pos;
@@ -70,7 +62,7 @@ public class LockProximityScript : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
 
-        for (float a = fillImage.color.a; a >= 0.0f; a -= 0.05f)
+        for (float a = fillImage.color.a; a > 0.0f; a -= 0.05f)
         {
             c.a = a;
             fillImage.color = c;
