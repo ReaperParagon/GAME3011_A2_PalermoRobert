@@ -8,6 +8,9 @@ public class LockPickScript : MonoBehaviour
     [SerializeField]
     public GameObject lockpickBody;
 
+    [SerializeField]
+    public Animator lockpickAnimator;
+
     [SerializeField, Range(0.01f, 2.0f)]
     public float rotateSensitivity = 0.02f;
 
@@ -23,6 +26,7 @@ public class LockPickScript : MonoBehaviour
         LockPickingEvents.LockChanged += SetupLockPick;
 
         canRotate = true;
+        lockpickAnimator.SetBool("TryingLock", false);
     }
 
     private void OnDisable()
@@ -62,6 +66,12 @@ public class LockPickScript : MonoBehaviour
         if (!LockPickingScript.allowInput)
             return;
 
+        if (value.isPressed)
+        {
+            lockpickAnimator.SetBool("TryingLock", true);
+            LockPickingAudioManager.instance.PlayAudio(LockPickAudioClips.TryLock);
+        }
+
         canRotate = !value.isPressed;
     }
 
@@ -70,6 +80,10 @@ public class LockPickScript : MonoBehaviour
         if (!LockPickingScript.allowInput)
             return;
 
+        if (LockPickingAudioManager.instance.GetIsPlayingClip(LockPickAudioClips.TryLock))
+            LockPickingAudioManager.instance.StopAudio();
+
+        lockpickAnimator.SetBool("TryingLock", false);
         canRotate = !value.isPressed;
     }
 }

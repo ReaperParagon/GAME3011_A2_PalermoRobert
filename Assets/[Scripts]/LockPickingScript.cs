@@ -115,6 +115,8 @@ public class LockPickingScript : MonoBehaviour
         // Next Pin
         GetNewPin();
 
+        LockPickingAudioManager.instance.PlayAudio(LockPickAudioClips.LockPin);
+
         return false;
     }
 
@@ -129,11 +131,20 @@ public class LockPickingScript : MonoBehaviour
         {
             LockPickingEvents.InvokeOnTryLock(CheckCurrentAngle(), CheckAngleProximity());
 
-            if (CheckCurrentAngle() && CheckDonePins())
+            if (!CheckCurrentAngle())
+            {
+                LockPickingAudioManager.instance.PlayAudio(LockPickAudioClips.LockFail);
+                return;
+            }
+
+            if (CheckDonePins())
             {
                 // Lock is Done
                 LockPickingEvents.InvokeOnSuccessfulPick();
+
+                LockPickingAudioManager.instance.PlayAudio(LockPickAudioClips.Unlock);
             }
+                
         }
     }
 
