@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class LockPickingUIManager : MonoBehaviour
@@ -144,5 +145,19 @@ public class LockPickingUIManager : MonoBehaviour
 
         // Set Colour
         lockBody.GetComponent<Image>().color = Color.Lerp(Color.white, Color.red, currentLock.lockDifficulty);
+    }
+
+    /// Input System ///
+
+    public void OnAbortLockPicking(InputValue value)
+    {
+        if (!lockPickingUI.activeSelf)
+            return;
+
+        LockPickingScript.allowInput = false;
+
+        lockTimer.StopTimer();
+        resultsLabel.text = "Aborted lockpicking...";
+        EnableResultsUI(true);
     }
 }
